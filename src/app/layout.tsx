@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-100`}>
+      <body className={`${inter.className} bg-white text-gray-900`}>
         <Toaster position="top-center" reverseOrder={false} />
         <main>{children}</main>
       </body>

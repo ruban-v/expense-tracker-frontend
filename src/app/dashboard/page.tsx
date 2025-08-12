@@ -1,3 +1,5 @@
+"use client";
+
 import MonthlySummaryChart from "@/components/dashboard/MonthlySummaryChart";
 
 export default function DashboardPage() {

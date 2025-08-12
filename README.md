@@ -1,9 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Expense Tracker Frontend
+
+A modern expense tracking application built with Next.js, TypeScript, and Tailwind CSS. This application allows users to manage their expenses with features like adding, editing, deleting expenses, and viewing expense summaries.
+
+## Features
+
+- **User Authentication**: Login and registration system
+- **Expense Management**: Add, edit, and delete expenses
+- **Expense Categories**: Categorize expenses (Food, Transport, Shopping, etc.)
+- **Dashboard**: View expense summaries and charts
+- **Responsive Design**: Works on desktop and mobile devices
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- npm, yarn, pnpm, or bun
+
+### Environment Setup
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```bash
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
+```
+
+### Installation
+
+1. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+2. Run the development server:
 ```bash
 npm run dev
 # or
@@ -14,11 +47,53 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Endpoints
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application expects the following API endpoints to be available:
+
+### Authentication
+- `POST /api/register` - User registration
+- `POST /api/login` - User login
+
+### Expenses
+- `GET /api/expenses` - Get all expenses
+- `POST /api/expenses` - Add new expense
+- `PUT /api/expenses/:id` - Update expense
+- `DELETE /api/expenses/:id` - Delete expense
+- `GET /api/expenses/summary/monthly` - Get monthly summary
+
+## Project Structure
+
+```
+src/
+├── api/
+│   └── api.ts              # API client functions
+├── app/
+│   ├── (auth)/
+│   │   ├── login/          # Login page
+│   │   └── register/       # Registration page
+│   ├── dashboard/          # Dashboard page
+│   └── layout.tsx          # Root layout
+├── components/
+│   ├── dashboard/
+│   │   ├── AddExpenseForm.tsx    # Add expense modal
+│   │   ├── ExpenseList.tsx       # Expense list with CRUD
+│   │   └── MonthlySummaryChart.tsx # Expense chart
+│   └── layout/
+│       └── Sidebar.tsx     # Navigation sidebar
+```
+
+## Technologies Used
+
+- **Next.js 15** - React framework
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Axios** - HTTP client
+- **React Hot Toast** - Notifications
+- **Lucide React** - Icons
+- **Recharts** - Charts and graphs
 
 ## Learn More
 

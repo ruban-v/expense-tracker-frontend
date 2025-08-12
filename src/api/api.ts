@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 
 export const authApi = {
   register: (data: { name: string; email: string; password: string }) =>
@@ -29,7 +29,18 @@ export const expenseApi = {
       headers: { Authorization: `Bearer ${token}` },
     }),
 
-  updateExpense: (id: string, data: string, token: string) =>
+  updateExpense: (
+    id: string,
+    data: {
+      title: string;
+      description?: string;
+      amount: number;
+      category_id: string;
+      expense_date: string;
+      expense_time: string;
+    },
+    token: string
+  ) =>
     axios.put(`${BASE_URL}/expenses/${id}`, data, {
       headers: { Authorization: `Bearer ${token}` },
     }),
@@ -39,7 +50,10 @@ export const expenseApi = {
       headers: { Authorization: `Bearer ${token}` },
     }),
 
-  getExpenses: (params: string, token: string) =>
+  getExpenses: (
+    params: Record<string, string | number | boolean> | undefined,
+    token: string
+  ) =>
     axios.get(`${BASE_URL}/expenses`, {
       headers: { Authorization: `Bearer ${token}` },
       params,
