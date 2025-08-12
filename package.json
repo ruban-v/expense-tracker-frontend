@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npx @cloudflare/next-on-pages build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@cloudflare/next-on-pages": "^1.13.13",
     "axios": "^1.11.0",
     "lucide-react": "^0.539.0",
     "next": "15.4.6",
