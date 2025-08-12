@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-// import axios from "axios";
+import { authApi } from "../../../api/api";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
@@ -34,26 +34,16 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      console.log("Registering user:", {
-        name: formData.name,
-        email: formData.email,
-      });
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      /*
-      await axios.post("/api/register", {
+      await authApi.register({
         name: formData.name,
         email: formData.email,
         password: formData.password,
       });
-      */
 
       toast.success("Registration successful! Please log in.");
       router.push("/login");
-    } catch (error) {
-      console.error("Registration failed:", error);
-
-      toast.error("An account with this email already exists.");
+    } catch (e) {
+      toast.error(`An account with this email already exists: ${e}`);
     } finally {
       setIsLoading(false);
     }
