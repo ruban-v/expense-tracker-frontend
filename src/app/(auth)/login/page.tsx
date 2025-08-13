@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-// import axios from "axios";
+import { authApi } from "../../../api/api";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
@@ -32,18 +32,9 @@ export default function LoginPage() {
       console.log("login with:", formData);
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      /*
-      // Example of the actual API call:
-      const response = await axios.post("/api/login", {
-        email: formData.email,
-        password: formData.password,
-      });
+      const response = await authApi.login(formData);
       const { token } = response.data;
-      localStorage.setItem("authToken", token); // Store the real token
-      */
-
-      const mockToken = "test-token";
-      localStorage.setItem("authToken", mockToken);
+      localStorage.setItem("authToken", token);
 
       toast.success("Login successful! Redirecting...");
       router.push("/dashboard");

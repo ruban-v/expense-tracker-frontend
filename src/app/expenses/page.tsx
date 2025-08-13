@@ -2,47 +2,49 @@
 
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import AddExpenseForm from "@/components/dashboard/AddExpenseForm";
-import ExpenseList from "@/components/dashboard/ExpenseList";
 
 export default function ExpensesPage() {
   const [showAddForm, setShowAddForm] = useState(false);
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
-
-  const handleExpenseAdded = () => {
-    setRefreshTrigger((prev) => prev + 1);
-  };
-
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">
-            Expenses
-          </h2>
-          <p className="text-gray-500 mt-1">Manage and track your recent spending</p>
+    <div className="h-full bg-gray-50">
+      <div className="mx-auto max-w-4xl py-8 px-4">
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-800">Expenses</h1>
+            <p className="mt-2 text-gray-500">
+              Manage and track your recent spending
+            </p>
+          </div>
+          <button
+            onClick={() => setShowAddForm(true)}
+            className="flex items-center gap-2 px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors shadow"
+          >
+            <Plus size={18} />
+            Add Expense
+          </button>
         </div>
-        <button
-          onClick={() => setShowAddForm(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-sm"
-        >
-          <Plus size={16} />
-          Add Expense
-        </button>
-      </div>
 
-      <div className="rounded-2xl border border-gray-200 bg-white shadow-sm">
-        <div className="p-6">
-          <ExpenseList refreshTrigger={refreshTrigger} />
+        <div className="rounded-xl bg-white shadow-lg border border-gray-200">
+          <div className="p-6">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">
+              Recent Expenses
+            </h2>
+          </div>
         </div>
-      </div>
 
-      {showAddForm && (
-        <AddExpenseForm
-          onExpenseAdded={handleExpenseAdded}
-          onClose={() => setShowAddForm(false)}
-        />
-      )}
+        {showAddForm && (
+          <>
+            <div
+              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
+              onClick={() => setShowAddForm(false)}
+            />
+            <div className="fixed inset-0 flex items-center justify-center z-50">
+              <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg border border-gray-200">
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
