@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Plus, RefreshCcw } from "lucide-react";
 import { expenseApi } from "@/api/api";
-import { Expense } from "@/api/types";
+import type { Expense } from "@/api/types";
 import ExpenseList from "@/components/expenses/ExpenseList";
 import AddExpenseForm, {
   AddExpensePayload,
