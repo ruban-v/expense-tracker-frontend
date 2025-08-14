@@ -110,39 +110,39 @@ export default function ExpensesPage() {
       <div className="mx-auto w-full py-4 px-3 sm:px-6 lg:px-6">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Expenses</h1>
-            <p className="mt-1 text-sm text-gray-500">
+            <h1 className="text-3xl font-bold text-gray-800">Expenses</h1>
+            <p className="mt-1 text-base text-gray-500">
               Manage and track your recent spending
             </p>
           </div>
           <div className="flex gap-2">
             <button
               onClick={() => setShowCatModal(true)}
-              className="flex items-center gap-2 px-3 py-1.5 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors shadow text-sm"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors shadow text-base"
             >
               Categories
             </button>
             <button
               onClick={openAdd}
-              className="flex items-center gap-2 px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors shadow text-sm"
+              className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors shadow text-base"
             >
-              <Plus size={16} />
+              <Plus size={18} />
               Add Expense
             </button>
             <button
               onClick={loadExpenses}
-              className="flex items-center gap-2 px-2.5 py-1.5 bg-white text-gray-600 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors border border-gray-200 shadow text-sm"
+              className="flex items-center gap-2 px-3 py-2 bg-white text-gray-600 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors border border-gray-200 shadow text-base"
               title="Refresh expenses"
             >
-              <RefreshCcw size={14} />
+              <RefreshCcw size={16} />
             </button>
           </div>
         </div>
         <div className="mb-8">
-          <h2 className="text-base font-semibold text-gray-700 mb-2 flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
             Recent Expenses{" "}
             {expensesLoading && (
-              <span className="text-xs font-normal text-indigo-500 animate-pulse">
+              <span className="text-sm font-normal text-indigo-500 animate-pulse">
                 Loading...
               </span>
             )}

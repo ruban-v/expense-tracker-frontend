@@ -145,7 +145,7 @@ export default function AddExpenseForm({
               <Plus size={16} className="text-indigo-600" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 text-base">
+              <h3 className="font-semibold text-gray-900 text-lg">
                 {editingId ? "Edit Expense" : "Add Expense"}
               </h3>
             </div>
@@ -154,7 +154,7 @@ export default function AddExpenseForm({
             <button
               type="button"
               onClick={onCancel}
-              className="px-2.5 py-1.5 text-xs rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors font-medium"
+              className="px-3 py-2 text-sm rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors font-medium"
               disabled={loading}
             >
               Cancel
@@ -162,7 +162,7 @@ export default function AddExpenseForm({
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="px-3 py-1.5 text-xs rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 transition-colors font-medium shadow-sm"
+              className="px-4 py-2 text-sm rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 transition-colors font-medium shadow-sm"
             >
               {loading
                 ? editingId
@@ -179,12 +179,12 @@ export default function AddExpenseForm({
         <div className="p-6 space-y-3 flex-1 overflow-y-auto">
           {/* Title */}
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              className="w-full rounded-lg border border-gray-300 px-2.5 py-1.5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-900 text-sm"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-900 text-base"
               value={form.title}
               onChange={(e) =>
                 setForm((f) => ({ ...f, title: e.target.value }))
@@ -196,14 +196,14 @@ export default function AddExpenseForm({
           {/* Amount, Date & Time */}
           <div className="grid grid-cols-3 gap-2.5">
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Amount (₹) <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
                 min="0"
                 step="0.01"
-                className="w-full rounded-lg border border-gray-300 px-2.5 py-1.5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-900 text-sm"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-900 text-base"
                 value={form.amount}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, amount: e.target.value }))
@@ -212,12 +212,12 @@ export default function AddExpenseForm({
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Date <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
-                className="w-full rounded-lg border border-gray-300 px-2.5 py-1.5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-900 text-sm"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-900 text-base"
                 value={form.expense_date}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, expense_date: e.target.value }))
@@ -225,12 +225,12 @@ export default function AddExpenseForm({
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Time <span className="text-red-500">*</span>
               </label>
               <input
                 type="time"
-                className="w-full rounded-lg border border-gray-300 px-2.5 py-1.5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-900 text-sm"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-900 text-base"
                 value={form.expense_time}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, expense_time: e.target.value }))
@@ -241,12 +241,12 @@ export default function AddExpenseForm({
 
           {/* Description */}
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Description
             </label>
             <textarea
               rows={2}
-              className="w-full rounded-lg border border-gray-300 px-2.5 py-1.5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-900 resize-none text-sm"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-900 resize-none text-base"
               value={form.description}
               onChange={(e) =>
                 setForm((f) => ({ ...f, description: e.target.value }))
@@ -258,17 +258,17 @@ export default function AddExpenseForm({
           {/* Categories */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="block text-xs font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700">
                 Categories <span className="text-red-500">*</span>
               </label>
               <button
                 type="button"
                 onClick={loadCategories}
                 disabled={catLoading}
-                className="flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-md transition-colors disabled:opacity-50"
+                className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-md transition-colors disabled:opacity-50"
               >
                 <RefreshCw
-                  size={10}
+                  size={12}
                   className={catLoading ? "animate-spin" : ""}
                 />
                 Refresh
@@ -278,19 +278,19 @@ export default function AddExpenseForm({
               <input
                 type="text"
                 placeholder="Search categories..."
-                className="w-full mb-1.5 px-2.5 py-1.5 border border-gray-200 rounded-lg text-xs focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none placeholder:text-gray-600"
+                className="w-full mb-2 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none placeholder:text-gray-600"
                 value={catSearch}
                 onChange={(e) => setCatSearch(e.target.value)}
               />
               <div className="max-h-48 overflow-y-auto">
                 {catLoading && (
-                  <div className="text-xs text-gray-500 p-1.5">Loading...</div>
+                  <div className="text-sm text-gray-500 p-2">Loading...</div>
                 )}
                 {catError && (
-                  <div className="text-xs text-red-500 p-1.5">{catError}</div>
+                  <div className="text-sm text-red-500 p-2">{catError}</div>
                 )}
                 {!catLoading && !catError && categories.length === 0 && (
-                  <div className="text-xs text-gray-500 p-1.5">
+                  <div className="text-sm text-gray-500 p-2">
                     No categories found
                   </div>
                 )}
@@ -314,7 +314,7 @@ export default function AddExpenseForm({
                                   : [...f.category_ids, cat.id],
                               }))
                             }
-                            className={`text-left text-xs px-2.5 py-1.5 rounded-lg transition-colors ${
+                            className={`text-left text-sm px-3 py-2 rounded-lg transition-colors ${
                               selected
                                 ? "bg-indigo-600 text-white"
                                 : "bg-white hover:bg-gray-100 border border-gray-200 text-gray-700"
@@ -335,7 +335,7 @@ export default function AddExpenseForm({
                     return (
                       <span
                         key={id}
-                        className="inline-flex items-center gap-1 bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded-full text-[10px] font-medium"
+                        className="inline-flex items-center gap-1 bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs font-medium"
                       >
                         {cat.name}
                         <button
@@ -350,7 +350,7 @@ export default function AddExpenseForm({
                           }
                           className="hover:text-red-600"
                         >
-                          <X size={10} />
+                          <X size={12} />
                         </button>
                       </span>
                     );
@@ -361,8 +361,8 @@ export default function AddExpenseForm({
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-2.5">
-              <p className="text-xs text-red-600">{error}</p>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+              <p className="text-sm text-red-600">{error}</p>
             </div>
           )}
         </div>

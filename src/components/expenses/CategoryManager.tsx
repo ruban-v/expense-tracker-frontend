@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { categoryApi } from "../../api/api";
+import { categoryApi } from "@/api/api";
 
 type AxiosErrorLike = {
   response?: { data?: { error?: string } };
@@ -124,8 +124,8 @@ export default function CategoryManager({ onCategoryChange }: Props) {
   }
 
   return (
-    <div className="flex flex-col h-[400px]">
-      <div className="flex-none pb-4 border-b h-[20%] flex items-center">
+    <div className="flex flex-col h-full p-6">
+      <div className="flex-none pb-4 border-b mb-4">
         <form
           onSubmit={handleAddCategory}
           className="flex flex-col md:flex-row gap-2 w-full"
@@ -133,13 +133,13 @@ export default function CategoryManager({ onCategoryChange }: Props) {
           <div className="flex-1 flex gap-2">
             <input
               type="text"
-              className="flex-1 rounded-md border border-gray-300 px-2.5 py-1.5 text-black bg-white text-sm"
+              className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-black bg-white text-base"
               placeholder="Add new category"
               value={newCat}
               onChange={(e) => setNewCat(e.target.value)}
               disabled={loading}
             />
-            <label className="flex items-center gap-1 text-[10px] font-medium text-gray-600 px-2 bg-gray-100 rounded-md border border-gray-300">
+            <label className="flex items-center gap-1 text-sm font-medium text-gray-600 px-3 bg-gray-100 rounded-md border border-gray-300">
               <input
                 type="checkbox"
                 checked={newIsDefault}
@@ -151,24 +151,24 @@ export default function CategoryManager({ onCategoryChange }: Props) {
           </div>
           <button
             type="submit"
-            className="px-3 py-1.5 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-60 text-sm"
+            className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-60 text-base"
             disabled={loading}
           >
             Add
           </button>
         </form>
       </div>
-      <div className="flex-1 overflow-y-auto pt-3 h-[80%]">
+      <div className="flex-1 overflow-y-auto">
         {loading ? (
-          <div className="text-center text-gray-500 text-sm">Loading...</div>
+          <div className="text-center text-gray-500 text-base">Loading...</div>
         ) : error ? (
-          <div className="text-center text-red-500 text-sm">{error}</div>
+          <div className="text-center text-red-500 text-base">{error}</div>
         ) : (
           <ul className="space-y-1.5">
             {categories.map((cat: Category) => (
               <li
                 key={cat.id}
-                className="flex items-center justify-between bg-gradient-to-r from-gray-50 to-white hover:from-indigo-50 hover:to-white rounded-md px-2.5 py-1.5 border border-gray-200 transition-colors"
+                className="flex items-center justify-between bg-gradient-to-r from-gray-50 to-white hover:from-indigo-50 hover:to-white rounded-md px-3 py-2 border border-gray-200 transition-colors"
               >
                 {editId === cat.id ? (
                   <form
@@ -177,14 +177,14 @@ export default function CategoryManager({ onCategoryChange }: Props) {
                   >
                     <input
                       type="text"
-                      className="flex-1 rounded-md border border-gray-300 px-2 py-1 text-black bg-white text-sm"
+                      className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-black bg-white text-base"
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
                     />
                     <button
                       type="button"
                       onClick={() => setEditDefault(!editDefault)}
-                      className={`px-2 py-1 rounded-full text-[9px] font-medium border transition-colors ${
+                      className={`px-3 py-2 rounded-full text-sm font-medium border transition-colors ${
                         editDefault
                           ? "bg-indigo-100 text-indigo-700 border-indigo-200"
                           : "bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200"
@@ -194,13 +194,13 @@ export default function CategoryManager({ onCategoryChange }: Props) {
                     </button>
                     <button
                       type="submit"
-                      className="px-2 py-1 bg-green-600 text-white rounded text-[10px] hover:bg-green-700"
+                      className="px-3 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700"
                     >
                       Save
                     </button>
                     <button
                       type="button"
-                      className="px-2 py-1 bg-gray-300 text-gray-700 rounded text-[10px] hover:bg-gray-400"
+                      className="px-3 py-2 bg-gray-300 text-gray-700 rounded text-sm hover:bg-gray-400"
                       onClick={cancelEdit}
                     >
                       Cancel
@@ -209,24 +209,24 @@ export default function CategoryManager({ onCategoryChange }: Props) {
                 ) : (
                   <>
                     <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <span className="text-gray-800 truncate text-sm">
+                      <span className="text-gray-800 truncate text-base">
                         {cat.name}
                       </span>
                       {cat.is_default && (
-                        <span className="ml-1 text-[9px] uppercase tracking-wide bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded">
+                        <span className="ml-1 text-xs uppercase tracking-wide bg-indigo-100 text-indigo-700 px-2 py-1 rounded">
                           Default
                         </span>
                       )}
                     </div>
                     <div className="flex gap-2 ml-2">
                       <button
-                        className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+                        className="text-base text-indigo-600 hover:text-indigo-800 font-medium"
                         onClick={() => startEdit(cat)}
                       >
                         Edit
                       </button>
                       <button
-                        className="text-sm text-red-600 hover:text-red-700 font-medium"
+                        className="text-base text-red-600 hover:text-red-700 font-medium"
                         onClick={() => handleDeleteCategory(cat.id)}
                       >
                         Delete
@@ -237,7 +237,7 @@ export default function CategoryManager({ onCategoryChange }: Props) {
               </li>
             ))}
             {categories.length === 0 && (
-              <li className="text-gray-500 text-center text-sm">
+              <li className="text-gray-500 text-center text-base">
                 No categories found.
               </li>
             )}

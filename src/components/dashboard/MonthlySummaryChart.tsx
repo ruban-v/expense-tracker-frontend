@@ -25,7 +25,7 @@ export default function MonthlySummaryChart() {
 
   return (
     <div className="rounded-xl bg-white p-6 shadow-md">
-      <h3 className="text-lg font-semibold text-gray-800">
+      <h3 className="text-xl font-semibold text-gray-800">
         Monthly Expense Summary
       </h3>
       <div className="mt-4 h-80 w-full">
@@ -40,9 +40,9 @@ export default function MonthlySummaryChart() {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
-            <XAxis dataKey="month" tick={{ fill: "#6B7280", fontSize: 12 }} />
+            <XAxis dataKey="month" tick={{ fill: "#6B7280", fontSize: 14 }} />
             <YAxis
-              tick={{ fill: "#6B7280", fontSize: 12 }}
+              tick={{ fill: "#6B7280", fontSize: 14 }}
               tickFormatter={(value) => `₹${value}`}
             />
             <Tooltip

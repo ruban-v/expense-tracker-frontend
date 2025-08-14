@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { authApi } from "../../../api/api";
+import { authApi } from "@/api/api";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
@@ -52,14 +52,14 @@ export default function RegisterPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
-        <h2 className="mb-6 text-center text-3xl font-bold text-gray-800">
+        <h2 className="mb-6 text-center text-4xl font-bold text-gray-800">
           Create Your Account
         </h2>
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-4">
             <label
               htmlFor="name"
-              className="mb-2 block text-sm font-medium text-gray-700"
+              className="mb-2 block text-base font-medium text-gray-700"
             >
               Full Name
             </label>
@@ -69,14 +69,14 @@ export default function RegisterPage() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
               required
             />
           </div>
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="mb-2 block text-sm font-medium text-gray-700"
+              className="mb-2 block text-base font-medium text-gray-700"
             >
               Email Address
             </label>
@@ -86,14 +86,14 @@ export default function RegisterPage() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
               required
             />
           </div>
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="mb-2 block text-sm font-medium text-gray-700"
+              className="mb-2 block text-base font-medium text-gray-700"
             >
               Password
             </label>
@@ -103,14 +103,14 @@ export default function RegisterPage() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
               required
             />
           </div>
           <div className="mb-6">
             <label
               htmlFor="confirmPassword"
-              className="mb-2 block text-sm font-medium text-gray-700"
+              className="mb-2 block text-base font-medium text-gray-700"
             >
               Confirm Password
             </label>
@@ -120,7 +120,7 @@ export default function RegisterPage() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
               required
             />
           </div>
@@ -128,13 +128,13 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-indigo-400"
+              className="w-full rounded-md bg-indigo-600 px-4 py-3 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-indigo-400"
             >
               {isLoading ? "Creating Account..." : "Register"}
             </button>
           </div>
         </form>
-        <p className="mt-6 text-center text-sm text-gray-600">
+        <p className="mt-6 text-center text-base text-gray-600">
           Already have an account?{" "}
           <Link
             href="/login"
