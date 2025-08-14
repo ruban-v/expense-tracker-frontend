@@ -13,13 +13,42 @@ export const authApi = {
     axios.post(`${BASE_URL}/forgot-password`, data),
 };
 
+export const categoryApi = {
+  getCategories: (token: string) =>
+    axios.get(`${BASE_URL}/categories`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+
+  createCategory: (
+    data: { name: string; is_default: boolean },
+    token: string
+  ) =>
+    axios.post(`${BASE_URL}/categories`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+
+  updateCategory: (
+    id: string,
+    data: { name: string; is_default: boolean },
+    token: string
+  ) =>
+    axios.put(`${BASE_URL}/categories/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+
+  deleteCategory: (id: string, token: string) =>
+    axios.delete(`${BASE_URL}/categories/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+};
+
 export const expenseApi = {
   addExpense: (
     data: {
       title: string;
       description?: string;
       amount: number;
-      category_id: string;
+      categories: string[];
       expense_date: string;
       expense_time: string;
     },
@@ -35,7 +64,7 @@ export const expenseApi = {
       title: string;
       description?: string;
       amount: number;
-      category_id: string;
+      categories: string[];
       expense_date: string;
       expense_time: string;
     },
