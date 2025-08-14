@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Plus, X, RefreshCw } from "lucide-react";
 import { categoryApi, expenseApi } from "@/api/api";
 import { Category } from "@/api/types";
@@ -50,23 +50,40 @@ export default function AddExpenseForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function loadCategories() {
+  const loadCategories = useCallback(async () => {
     setCatLoading(true);
     setCatError("");
     try {
       const token = localStorage.getItem("authToken") || "";
       const res = await categoryApi.getCategories(token);
-      setCategories(res.data.categories || []);
+      const fetchedCategories = res.data.categories || [];
+      setCategories(fetchedCategories);
+
+      if (!editingId && form.category_ids.length === 0) {
+        const defaultCategories = fetchedCategories.filter(
+          (cat: Category) => cat.is_default
+        );
+        const defaultCategoryIds = defaultCategories.map(
+          (cat: Category) => cat.id
+        );
+
+        if (defaultCategoryIds.length > 0) {
+          setForm((prevForm) => ({
+            ...prevForm,
+            category_ids: defaultCategoryIds,
+          }));
+        }
+      }
     } catch {
       setCatError("Failed to load categories");
     } finally {
       setCatLoading(false);
     }
-  }
+  }, [editingId, form.category_ids.length]);
 
   useEffect(() => {
     loadCategories();
-  }, []);
+  }, [loadCategories]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
