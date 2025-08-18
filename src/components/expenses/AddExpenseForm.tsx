@@ -58,15 +58,26 @@ export default function AddExpenseForm({
       const res = await categoryApi.getCategories(token);
       const fetchedCategories = res.data.categories || [];
       setCategories(fetchedCategories);
+    } catch {
+      setCatError("Failed to load categories");
+    } finally {
+      setCatLoading(false);
+    }
+  }, []);
 
-      if (!editingId && form.category_ids.length === 0) {
-        const defaultCategories = fetchedCategories.filter(
+  useEffect(() => {
+    loadCategories();
+  }, [loadCategories]);
+
+  useEffect(() => {
+    if (!editingId) {
+      if (categories.length > 0 && form.category_ids.length === 0) {
+        const defaultCategories = categories.filter(
           (cat: Category) => cat.is_default
         );
         const defaultCategoryIds = defaultCategories.map(
           (cat: Category) => cat.id
         );
-
         if (defaultCategoryIds.length > 0) {
           setForm((prevForm) => ({
             ...prevForm,
@@ -74,16 +85,8 @@ export default function AddExpenseForm({
           }));
         }
       }
-    } catch {
-      setCatError("Failed to load categories");
-    } finally {
-      setCatLoading(false);
     }
-  }, [editingId, form.category_ids.length]);
-
-  useEffect(() => {
-    loadCategories();
-  }, [loadCategories]);
+  }, [categories, editingId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

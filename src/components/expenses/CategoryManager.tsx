@@ -139,15 +139,18 @@ export default function CategoryManager({ onCategoryChange }: Props) {
               onChange={(e) => setNewCat(e.target.value)}
               disabled={loading}
             />
-            <label className="flex items-center gap-1 text-sm font-medium text-gray-600 px-3 bg-gray-100 rounded-md border border-gray-300">
-              <input
-                type="checkbox"
-                checked={newIsDefault}
-                onChange={(e) => setNewIsDefault(e.target.checked)}
-                disabled={loading}
-              />
-              Default
-            </label>
+            <button
+              type="button"
+              onClick={() => setNewIsDefault((v) => !v)}
+              className={`px-3 py-2 rounded-full text-sm font-medium border transition-colors ${
+                newIsDefault
+                  ? "bg-indigo-100 text-indigo-700 border-indigo-200"
+                  : "bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200"
+              }`}
+              disabled={loading}
+            >
+              {newIsDefault ? "✓ Default" : "Default"}
+            </button>
           </div>
           <button
             type="submit"
