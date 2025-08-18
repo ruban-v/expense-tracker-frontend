@@ -86,7 +86,7 @@ export default function AddExpenseForm({
         }
       }
     }
-  }, [categories, editingId]);
+  }, [categories, editingId, form.category_ids.length]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
