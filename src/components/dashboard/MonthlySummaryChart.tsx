@@ -11,17 +11,25 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const mockData = [
-  { month: "Jun 2025", total: 1543.75 },
-  { month: "Jul 2025", total: 950.5 },
-  { month: "Aug 2025", total: 1200.0 },
-  { month: "Sep 2025", total: 1800.25 },
-  { month: "Oct 2025", total: 1100.0 },
-  { month: "Nov 2025", total: 2150.8 },
-];
+interface MonthlySummaryChartProps {
+  data?: { month: string; total: number }[];
+}
 
-export default function MonthlySummaryChart() {
-  //   const { data, error, isLoading } = useSWR('/api/expenses/summary/monthly', fetcher);
+export default function MonthlySummaryChart({
+  data,
+}: MonthlySummaryChartProps) {
+  if (!data || data.length === 0) {
+    return (
+      <div className="rounded-xl bg-white p-6 shadow-md">
+        <h3 className="text-xl font-semibold text-gray-800">
+          Monthly Expense Summary
+        </h3>
+        <div className="mt-4 flex h-80 w-full items-center justify-center">
+          <p className="text-gray-500">No data available for the chart.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-xl bg-white p-6 shadow-md">
@@ -31,7 +39,7 @@ export default function MonthlySummaryChart() {
       <div className="mt-4 h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={mockData}
+            data={data}
             margin={{
               top: 5,
               right: 30,
@@ -68,3 +76,4 @@ export default function MonthlySummaryChart() {
     </div>
   );
 }
+

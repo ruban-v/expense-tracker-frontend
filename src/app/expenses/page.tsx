@@ -19,23 +19,35 @@ export default function ExpensesPage() {
   const [showFilterForm, setShowFilterForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  // Master list of all expenses
-  const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
-  // List of expenses to display after filtering
-  const [filteredExpenses, setFilteredExpenses] = useState<Expense[]>([]);
-
+  const [expenses, setExpenses] = useState<Expense[]>([]);
   const [expensesLoading, setExpensesLoading] = useState(false);
   const [expensesError, setExpensesError] = useState("");
   const [filter, setFilter] = useState<ExpenseFilter>({});
 
-  // Load all expenses from the API
-  const loadExpenses = useCallback(async () => {
+  const loadExpenses = useCallback(async (currentFilter: ExpenseFilter) => {
     setExpensesLoading(true);
     setExpensesError("");
     try {
       const token = localStorage.getItem("authToken") || "";
-      const res = await expenseApi.getExpenses(undefined, token);
-      setAllExpenses(res.data.expenses || []);
+      const params: Record<string, string> = {};
+      if (currentFilter.category_id) {
+        params.category_id = currentFilter.category_id;
+      }
+      if (currentFilter.start_date) {
+        params.start_date = currentFilter.start_date;
+      }
+      if (currentFilter.end_date) {
+        params.end_date = currentFilter.end_date;
+      }
+      if (currentFilter.min_amount) {
+        params.min_amount = currentFilter.min_amount;
+      }
+      if (currentFilter.max_amount) {
+        params.max_amount = currentFilter.max_amount;
+      }
+
+      const res = await expenseApi.getExpenses(params, token);
+      setExpenses(res.data.expenses || []);
     } catch {
       setExpensesError("Failed to load expenses");
     } finally {
@@ -43,49 +55,9 @@ export default function ExpensesPage() {
     }
   }, []);
 
-  // Load expenses on initial render
   useEffect(() => {
-    loadExpenses();
-  }, [loadExpenses]);
-
-  // Apply filters to the master list
-  useEffect(() => {
-    let expenses = [...allExpenses];
-    const { category_id, start_date, end_date, min_amount, max_amount } =
-      filter;
-
-    if (category_id) {
-      expenses = expenses.filter((exp) =>
-        exp.categories?.some((cat) => cat.id === category_id)
-      );
-    }
-    if (start_date) {
-      expenses = expenses.filter((exp) => {
-        if (!exp.expense_date) return false;
-        const expenseDate = new Date(
-          exp.expense_date.split("-").reverse().join("-")
-        );
-        return expenseDate >= new Date(start_date);
-      });
-    }
-    if (end_date) {
-      expenses = expenses.filter((exp) => {
-        if (!exp.expense_date) return false;
-        const expenseDate = new Date(
-          exp.expense_date.split("-").reverse().join("-")
-        );
-        return expenseDate <= new Date(end_date);
-      });
-    }
-    if (min_amount) {
-      expenses = expenses.filter((exp) => exp.amount >= Number(min_amount));
-    }
-    if (max_amount) {
-      expenses = expenses.filter((exp) => exp.amount <= Number(max_amount));
-    }
-
-    setFilteredExpenses(expenses);
-  }, [allExpenses, filter]);
+    loadExpenses(filter);
+  }, [filter, loadExpenses]);
 
   function getCurrentDate() {
     return new Date().toISOString().slice(0, 10);
@@ -150,7 +122,7 @@ export default function ExpensesPage() {
       const token = localStorage.getItem("authToken") || "";
       await expenseApi.deleteExpense(id, token);
       (await import("react-hot-toast")).default.success("Deleted expense");
-      loadExpenses(); // Reload all expenses
+      loadExpenses(filter); // Reload expenses with current filter
     } catch {
       (await import("react-hot-toast")).default.error("Failed to delete");
     }
@@ -167,7 +139,6 @@ export default function ExpensesPage() {
   function handleRefresh() {
     handleClearFilter();
     setShowFilterForm(false);
-    loadExpenses();
   }
 
   return (
@@ -216,7 +187,7 @@ export default function ExpensesPage() {
       )}
 
       <ExpenseList
-        expenses={filteredExpenses}
+        expenses={expenses}
         loading={expensesLoading}
         error={expensesError}
         onEdit={openEdit}
@@ -235,10 +206,11 @@ export default function ExpensesPage() {
           onCancel={() => setShowAddForm(false)}
           onSaved={() => {
             setShowAddForm(false);
-            loadExpenses();
+            loadExpenses(filter);
           }}
         />
       )}
     </div>
   );
 }
+

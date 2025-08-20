@@ -31,6 +31,7 @@ export type CreateCategoryRequest = {
   is_default: boolean;
 };
 
+
 export type UpdateCategoryRequest = {
   name: string;
   is_default: boolean;

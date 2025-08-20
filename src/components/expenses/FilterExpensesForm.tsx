@@ -45,7 +45,16 @@ export default function FilterExpensesForm({
   };
 
   const handleFilter = () => {
-    onFilter(filter);
+    const apiFilter = { ...filter };
+    if (apiFilter.start_date) {
+      const [y, m, d] = apiFilter.start_date.split("-");
+      apiFilter.start_date = `${d}-${m}-${y}`;
+    }
+    if (apiFilter.end_date) {
+      const [y, m, d] = apiFilter.end_date.split("-");
+      apiFilter.end_date = `${d}-${m}-${y}`;
+    }
+    onFilter(apiFilter);
   };
 
   const handleClear = () => {

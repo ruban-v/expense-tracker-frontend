@@ -2,14 +2,24 @@
 
 import MonthlySummaryChart from "@/components/dashboard/MonthlySummaryChart";
 
-export default function DashboardPage() {
-  // Mock data
-  const summaryData = {
-    totalExpenses: 4694.75,
-    totalTransactions: 28,
-    averageExpense: 167.67,
-  };
+// Mock data for the summary cards
+const summaryData = {
+  totalExpenses: 76543.21,
+  totalTransactions: 123,
+  averageExpense: 622.3,
+};
 
+// Mock data for the chart
+const mockMonthlyData = [
+  { month: "Jan", total: 4000 },
+  { month: "Feb", total: 3000 },
+  { month: "Mar", total: 5000 },
+  { month: "Apr", total: 4500 },
+  { month: "May", total: 6000 },
+  { month: "Jun", total: 5500 },
+];
+
+export default function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
@@ -47,7 +57,8 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <MonthlySummaryChart />
+      <MonthlySummaryChart data={mockMonthlyData} />
     </div>
   );
 }
+
