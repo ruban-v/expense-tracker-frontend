@@ -298,7 +298,7 @@ export default function AddExpenseForm({
               <input
                 type="text"
                 placeholder="Search categories..."
-                className="w-full mb-2 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none placeholder:text-gray-600"
+                className="w-full mb-2 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-900 placeholder-gray-500"
                 value={catSearch}
                 onChange={(e) => setCatSearch(e.target.value)}
               />

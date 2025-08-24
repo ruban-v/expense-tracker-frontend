@@ -1,6 +1,6 @@
 import Sidebar from "@/components/layout/Sidebar";
 
-export default function ExpensesLayout({
+export default function ProfileLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -10,10 +10,12 @@ export type Category = {
 export type ExpenseCategory = {
   id: string;
   name: string;
+  is_default?: boolean;
 };
 
 export type Expense = {
   id: string;
+  user_id?: string;
   title: string;
   description?: string;
   amount: number;
@@ -25,12 +27,96 @@ export type Expense = {
   updated_at: string;
 };
 
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  profile_image: string | null;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  deactivated_at?: string | null;
+};
+
+export type Profile = {
+  id: string;
+  name: string;
+  email: string;
+  profile_image: string | null;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+// Dashboard types - Updated to match actual API response
+export type DailySummary = {
+  day: string;
+  total: number;
+};
+
+export type MonthlySummary = {
+  month: string;
+  total: number;
+};
+
+export type WeeklySummary = {
+  week: string;
+  total: number;
+};
+
+export type RecentExpense = {
+  id: string;
+  title: string;
+  amount: number;
+  expense_date: string;
+  expense_time: string;
+};
+
+export type Summary = {
+  current_month_amount: number;
+  current_month_count: number;
+  current_week_amount: number;
+  current_week_count: number;
+  today_amount: number;
+  today_count: number;
+  total_amount: number;
+  total_expenses: number;
+};
+
+export type Dashboard = {
+  daily_summary: DailySummary[];
+  monthly_summary: MonthlySummary[];
+  weekly_summary: WeeklySummary[];
+  recent_expenses: RecentExpense[];
+  summary: Summary;
+};
+
 // API Request types
+export type RegisterRequest = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type LoginRequest = {
+  email: string;
+  password: string;
+};
+
+export type UpdateProfileRequest = {
+  name: string;
+  profile_image?: string | null;
+};
+
+export type ChangePasswordRequest = {
+  current_password: string;
+  new_password: string;
+};
+
 export type CreateCategoryRequest = {
   name: string;
   is_default: boolean;
 };
-
 
 export type UpdateCategoryRequest = {
   name: string;
@@ -39,7 +125,7 @@ export type UpdateCategoryRequest = {
 
 export type CreateExpenseRequest = {
   title: string;
-  description: string;
+  description?: string;
   amount: number;
   categories: string[];
   expense_date: string;
@@ -48,47 +134,65 @@ export type CreateExpenseRequest = {
 
 export type UpdateExpenseRequest = {
   title: string;
-  description: string;
+  description?: string;
   amount: number;
   categories: string[];
   expense_date: string;
   expense_time: string;
 };
 
+export type ExpenseFilters = {
+  category_id?: string;
+  start_date?: string;
+  end_date?: string;
+  min_amount?: number;
+  max_amount?: number;
+};
+
 // API Response types
+export type AuthApiResponse = {
+  message: string;
+  user?: User;
+  token?: string;
+  session_id?: string;
+};
+
+export type ProfileApiResponse = {
+  message: string;
+  profile: Profile;
+};
+
 export type CategoryApiResponse = {
-  success: boolean;
-  data: {
-    categories: Category[];
-  };
-};
-
-export type ExpenseApiResponse = {
-  success: boolean;
-  data: {
-    expenses: Expense[];
-  };
-};
-
-export type SingleExpenseApiResponse = {
-  success: boolean;
-  data: {
-    expense: Expense;
-  };
+  categories: Category[];
 };
 
 export type SingleCategoryApiResponse = {
-  success: boolean;
-  data: {
-    category: Category;
-  };
+  message: string;
+  category_id: string;
+  name: string;
+  is_default: boolean;
+};
+
+export type ExpenseApiResponse = {
+  expenses: Expense[];
+};
+
+export type SingleExpenseApiResponse = {
+  message: string;
+  expense: Expense;
+};
+
+export type DashboardApiResponse = {
+  dashboard: Dashboard;
+};
+
+export type MessageApiResponse = {
+  message: string;
 };
 
 // Error types
 export type ApiError = {
-  success: false;
   error: string;
-  message?: string;
 };
 
 export type AxiosErrorLike = {
@@ -113,6 +217,17 @@ export type AddExpenseFormData = {
 export type CategoryFormData = {
   name: string;
   is_default: boolean;
+};
+
+export type ProfileFormData = {
+  name: string;
+  profile_image?: string | null;
+};
+
+export type PasswordFormData = {
+  current_password: string;
+  new_password: string;
+  confirm_password: string;
 };
 
 // Component prop types
@@ -159,5 +274,3 @@ export type FilterParams = {
   date_to?: string;
   search?: string;
 };
-
-export type ExpenseFilters = PaginationParams & FilterParams;

@@ -3,21 +3,32 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { BarChart3, ClipboardList, LogOut } from "lucide-react";
+import { BarChart3, ClipboardList, User, LogOut } from "lucide-react";
+import { authApi } from "@/api/api";
 
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    toast.success("You have been logged out.");
-    router.push("/login");
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        await authApi.logout(token);
+      }
+    } catch (error) {
+      console.error("Logout API error:", error);
+    } finally {
+      localStorage.removeItem("authToken");
+      toast.success("You have been logged out.");
+      router.push("/login");
+    }
   };
 
   const navLinks = [
     { name: "Dashboard", href: "/dashboard", icon: BarChart3 },
     { name: "Expenses", href: "/expenses", icon: ClipboardList },
+    { name: "Profile", href: "/profile", icon: User },
   ];
 
   return (

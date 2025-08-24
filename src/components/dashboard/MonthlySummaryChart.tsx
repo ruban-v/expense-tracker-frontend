@@ -10,9 +10,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { MonthlySummary } from "@/api/types";
 
 interface MonthlySummaryChartProps {
-  data?: { month: string; total: number }[];
+  data?: MonthlySummary[];
 }
 
 export default function MonthlySummaryChart({
@@ -31,6 +32,12 @@ export default function MonthlySummaryChart({
     );
   }
 
+  // Format the data for the chart
+  const chartData = data.map((item) => ({
+    month: formatMonth(item.month),
+    total: item.total,
+  }));
+
   return (
     <div className="rounded-xl bg-white p-6 shadow-md">
       <h3 className="text-xl font-semibold text-gray-800">
@@ -39,7 +46,7 @@ export default function MonthlySummaryChart({
       <div className="mt-4 h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={data}
+            data={chartData}
             margin={{
               top: 5,
               right: 30,
@@ -61,7 +68,11 @@ export default function MonthlySummaryChart({
                   "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
                 border: "1px solid #E5E7EB",
               }}
-              formatter={(value) => [`₹${Number(value).toFixed(2)}`, "Total"]}
+              formatter={(value) => [
+                `₹${Number(value).toFixed(2)}`,
+                "Total Expenses",
+              ]}
+              labelFormatter={(label) => `Month: ${label}`}
             />
             <Legend wrapperStyle={{ paddingTop: "20px" }} />
             <Bar
@@ -77,3 +88,13 @@ export default function MonthlySummaryChart({
   );
 }
 
+// Helper function to format month from "Aug 2025" format
+function formatMonth(monthStr: string): string {
+  try {
+    // Handle format like "Aug 2025"
+    return monthStr;
+  } catch {
+    // Fallback if format is different
+    return monthStr;
+  }
+}

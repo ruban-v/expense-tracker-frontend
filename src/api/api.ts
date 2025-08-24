@@ -9,8 +9,40 @@ export const authApi = {
   login: (data: { email: string; password: string }) =>
     axios.post(`${BASE_URL}/login`, data),
 
+  logout: (token: string) =>
+    axios.post(
+      `${BASE_URL}/logout`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    ),
+
   forgotPassword: (data: { email: string }) =>
     axios.post(`${BASE_URL}/forgot-password`, data),
+};
+
+export const profileApi = {
+  getProfile: (token: string) =>
+    axios.get(`${BASE_URL}/profile`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+
+  updateProfile: (
+    data: { name: string; profile_image?: string | null },
+    token: string
+  ) =>
+    axios.put(`${BASE_URL}/profile`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+
+  changePassword: (
+    data: { current_password: string; new_password: string },
+    token: string
+  ) =>
+    axios.put(`${BASE_URL}/profile/password`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
 };
 
 export const categoryApi = {
@@ -80,11 +112,24 @@ export const expenseApi = {
     }),
 
   getExpenses: (
-    params: Record<string, string | number | boolean> | undefined,
+    params:
+      | {
+          category_id?: string;
+          start_date?: string;
+          end_date?: string;
+          min_amount?: number;
+          max_amount?: number;
+        }
+      | undefined,
     token: string
   ) =>
     axios.get(`${BASE_URL}/expenses`, {
       headers: { Authorization: `Bearer ${token}` },
       params,
+    }),
+
+  getDashboard: (token: string) =>
+    axios.get(`${BASE_URL}/dashboard`, {
+      headers: { Authorization: `Bearer ${token}` },
     }),
 };
