@@ -26,3 +26,20 @@ body {
   font-size: 16px;
   line-height: 1.6;
 }
+
+/* Remove outline from chart elements */
+.chart-container * {
+  outline: none !important;
+}
+
+.chart-container *:focus {
+  outline: none !important;
+}
+
+.chart-container svg {
+  outline: none !important;
+}
+
+.chart-container svg:focus {
+  outline: none !important;
+}

@@ -43,8 +43,11 @@ export default function MonthlySummaryChart({
       <h3 className="text-xl font-semibold text-gray-800">
         Monthly Expense Summary
       </h3>
-      <div className="mt-4 h-80 w-full">
-        <ResponsiveContainer width="100%" height="100%">
+      <div className="mt-4 h-80 w-full chart-container">
+        <ResponsiveContainer
+          width="100%"
+          height="100%"
+        >
           <BarChart
             data={chartData}
             margin={{
