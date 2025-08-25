@@ -159,7 +159,7 @@ export default function ExpensesPage() {
           </button>
           <button
             onClick={handleRefresh}
-            className="p-2 rounded-full hover:bg-gray-200"
+            className="p-2 rounded-full bg-gray-200 text-black hover:bg-gray-400 hover:text-white"
             title="Refresh expenses"
           >
             <RefreshCcw size={20} />
@@ -213,4 +213,3 @@ export default function ExpensesPage() {
     </div>
   );
 }
-

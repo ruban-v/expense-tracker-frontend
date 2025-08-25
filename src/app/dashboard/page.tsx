@@ -151,7 +151,7 @@ export default function DashboardPage() {
               dashboard.weekly_summary.slice(0, 3).map((week, index) => (
                 <div key={index} className="flex justify-between items-center">
                   <span className="text-gray-700">{week.week}</span>
-                  <span className="font-semibold">
+                  <span className="font-semibold text-black">
                     ₹{week.total.toLocaleString("en-IN")}
                   </span>
                 </div>

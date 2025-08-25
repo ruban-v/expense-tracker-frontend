@@ -34,7 +34,7 @@ export default function MonthlySummaryChart({
 
   // Format the data for the chart
   const chartData = data.map((item) => ({
-    month: formatMonth(item.month),
+    month: item.month,
     total: item.total,
   }));
 
@@ -86,15 +86,4 @@ export default function MonthlySummaryChart({
       </div>
     </div>
   );
-}
-
-// Helper function to format month from "Aug 2025" format
-function formatMonth(monthStr: string): string {
-  try {
-    // Handle format like "Aug 2025"
-    return monthStr;
-  } catch {
-    // Fallback if format is different
-    return monthStr;
-  }
 }

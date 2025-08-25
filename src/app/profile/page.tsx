@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { profileApi } from "@/api/api";
 import { Profile, UpdateProfileRequest } from "@/api/types";
-import { User, Mail, Lock, Camera, Save, ArrowLeft } from "lucide-react";
+import { User, Mail, Lock, Camera, Save, ArrowLeft, X } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function ProfilePage() {
@@ -19,6 +19,10 @@ export default function ProfilePage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [profileImage, setProfileImage] = useState<string | null>(null);
+
+  // Image URL modal states
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   // Password change states
   const [showPasswordForm, setShowPasswordForm] = useState(false);
@@ -139,18 +143,66 @@ export default function ProfilePage() {
     }
   }
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      // In a real app, you would upload the file to a server and get back a URL
-      // For now, we'll create a local URL for preview
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setProfileImage(result);
-      };
-      reader.readAsDataURL(file);
+  const handleImageUpload = () => {
+    setImageUrl(profileImage || "");
+    setShowImageModal(true);
+  };
+
+  const handleImageUrlSubmit = async () => {
+    // URL validation if imageUrl is provided
+    if (imageUrl.trim()) {
+      try {
+        new URL(imageUrl.trim());
+      } catch {
+        toast.error("Please enter a valid URL");
+        return;
+      }
     }
+
+    setUpdating(true);
+    try {
+      const token = localStorage.getItem("authToken") || "";
+      const updateData: UpdateProfileRequest = {
+        name: name.trim(),
+        profile_image: imageUrl.trim() || null,
+      };
+
+      await profileApi.updateProfile(updateData, token);
+
+      // Update local state
+      setProfileImage(imageUrl.trim() || null);
+      setShowImageModal(false);
+      setImageUrl("");
+
+      if (imageUrl.trim()) {
+        toast.success("Profile image updated successfully");
+      } else {
+        toast.success("Profile image removed successfully");
+      }
+
+      // Reload profile data to sync with server
+      loadProfile();
+    } catch (err: unknown) {
+      console.error("Update profile image error:", err);
+      if (err && typeof err === "object" && "response" in err) {
+        const errorResponse = err as {
+          response?: { data?: { message?: string } };
+        };
+        toast.error(
+          errorResponse.response?.data?.message ||
+            "Failed to update profile image"
+        );
+      } else {
+        toast.error("Failed to update profile image");
+      }
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handleImageUrlCancel = () => {
+    setShowImageModal(false);
+    setImageUrl("");
   };
 
   if (loading) {
@@ -267,19 +319,13 @@ export default function ProfilePage() {
                   <User className="w-10 h-10 text-gray-400" />
                 )}
               </div>
-              <label
-                htmlFor="profile-image"
-                className="absolute bottom-0 right-0 bg-indigo-600 text-white p-2 rounded-full cursor-pointer hover:bg-indigo-700"
+              <button
+                onClick={handleImageUpload}
+                className="absolute bottom-0 right-0 bg-indigo-600 text-white p-2 rounded-full cursor-pointer hover:bg-indigo-700 transition-colors"
+                title="Change profile image"
               >
                 <Camera className="w-4 h-4" />
-              </label>
-              <input
-                id="profile-image"
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-              />
+              </button>
             </div>
             <div>
               <h4 className="text-xl font-medium text-gray-800">
@@ -289,44 +335,47 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Name Field */}
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-base font-medium text-gray-700 mb-2"
-            >
-              <User className="inline w-5 h-5 mr-2" />
-              Full Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base text-gray-900 placeholder-gray-500"
-              placeholder="Enter your full name"
-            />
-          </div>
+          {/* Name and Email Fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Name Field */}
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-base font-medium text-gray-700 mb-2"
+              >
+                <User className="inline w-5 h-5 mr-2" />
+                Full Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base text-gray-900 placeholder-gray-500"
+                placeholder="Enter your full name"
+              />
+            </div>
 
-          {/* Email Field (Read-only) */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-base font-medium text-gray-700 mb-2"
-            >
-              <Mail className="inline w-5 h-5 mr-2" />
-              Email Address
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              readOnly
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-base cursor-not-allowed"
-            />
-            <p className="text-sm text-gray-500 mt-1">
-              Email cannot be changed
-            </p>
+            {/* Email Field (Read-only) */}
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-base font-medium text-gray-700 mb-2"
+              >
+                <Mail className="inline w-5 h-5 mr-2" />
+                Email Address
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                readOnly
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-base cursor-not-allowed"
+              />
+              <p className="text-sm text-gray-500 mt-1">
+                Email cannot be changed
+              </p>
+            </div>
           </div>
 
           {/* Update Profile Button */}
@@ -437,6 +486,84 @@ export default function ProfilePage() {
           </div>
         )}
       </div>
+
+      {/* Image URL Modal */}
+      {showImageModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md mx-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold text-gray-800">
+                Update Profile Image
+              </h3>
+              <button
+                onClick={handleImageUrlCancel}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label
+                  htmlFor="image-url"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Image URL
+                </label>
+                <input
+                  id="image-url"
+                  type="url"
+                  value={imageUrl}
+                  onChange={(e) => setImageUrl(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm text-gray-900 placeholder-gray-600"
+                  placeholder="https://example.com/image.jpg"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Enter a valid image URL or leave empty to remove current image
+                </p>
+              </div>
+
+              {/* Preview */}
+              {imageUrl && (
+                <div className="text-center">
+                  <p className="text-sm text-gray-600 mb-2">Preview:</p>
+                  <div className="w-20 h-20 mx-auto rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                    <Image
+                      src={imageUrl}
+                      alt="Preview"
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src =
+                          "https://ui-avatars.com/api/?name=Preview&background=cccccc&color=555555";
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="flex space-x-3 pt-2">
+                <button
+                  onClick={handleImageUrlSubmit}
+                  disabled={updating}
+                  className="flex-1 px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+                >
+                  {updating ? "Updating..." : "Update Image"}
+                </button>
+                <button
+                  onClick={handleImageUrlCancel}
+                  disabled={updating}
+                  className="flex-1 px-4 py-2 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
