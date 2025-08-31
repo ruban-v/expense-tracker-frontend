@@ -20,7 +20,7 @@ export default function ExpensesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
 
   const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [expensesLoading, setExpensesLoading] = useState(false);
+  const [expensesLoading, setExpensesLoading] = useState(true);
   const [expensesError, setExpensesError] = useState("");
   const [filter, setFilter] = useState<ExpenseFilter>({});
 
@@ -142,56 +142,56 @@ export default function ExpensesPage() {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      {/* Header Section - Responsive */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="min-w-0">
-          <h1 className="text-2xl font-bold text-gray-800 sm:text-3xl lg:text-4xl">
+    <div className="pt-12 space-y-2 lg:pt-0 sm:space-y-4 lg:space-y-6">
+      {/* Header Section - Ultra compact mobile */}
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-xl font-bold text-gray-900 sm:text-2xl lg:text-3xl">
             Expenses
           </h1>
-          <p className="mt-1 text-sm text-gray-600 sm:text-base">
+          <p className="text-sm text-gray-600 sm:text-sm lg:text-base">
             Manage and track your recent spending
           </p>
         </div>
-        
-        {/* Action buttons - Mobile optimized */}
-        <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:gap-3">
+
+        {/* Action buttons - Larger for mobile */}
+        <div className="flex gap-2 sm:gap-2">
           <button
             onClick={() => setShowFilterForm(!showFilterForm)}
-            className={`flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors sm:px-4 ${
+            className={`px-3 py-2 rounded text-sm font-semibold transition-colors sm:px-3 sm:py-2 ${
               showFilterForm
-                ? "bg-indigo-100 text-indigo-700 hover:bg-indigo-200"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                ? "bg-indigo-100 text-indigo-800 border border-indigo-200"
+                : "bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
             }`}
           >
             Filter
           </button>
           <button
             onClick={handleRefresh}
-            className="flex items-center justify-center p-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+            className="p-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200 transition-colors sm:p-2"
             title="Refresh expenses"
           >
-            <RefreshCcw size={18} className="sm:w-5 sm:h-5" />
+            <RefreshCcw size={18} className="sm:w-4 sm:h-4" />
           </button>
           <button
             onClick={openAdd}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 text-sm font-medium transition-colors sm:px-4"
+            className="flex items-center gap-1.5 px-3 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700 text-sm font-semibold transition-colors sm:px-3 sm:py-2"
           >
-            <Plus size={18} className="sm:w-5 sm:h-5" />
-            <span className="hidden sm:inline">Add Expense</span>
-            <span className="sm:hidden">Add</span>
+            <Plus size={18} className="sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">Add</span>
+            <span className="sm:hidden">Add Expense</span>
           </button>
           <button
             onClick={() => setShowCatModal(true)}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-600 text-white hover:bg-gray-700 text-sm font-medium transition-colors sm:px-4"
+            className="px-3 py-2 rounded bg-gray-600 text-white hover:bg-gray-700 text-xs font-semibold transition-colors sm:px-3 sm:py-2"
           >
             <span className="hidden sm:inline">Categories</span>
-            <span className="sm:hidden">Cat.</span>
+            <span className="sm:hidden">Category</span>
           </button>
         </div>
       </div>
 
-      {/* Filter Form - Improved layout */}
+      {/* Filter Form - Compact design */}
       {showFilterForm && (
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
           <FilterExpensesForm
@@ -201,17 +201,15 @@ export default function ExpensesPage() {
         </div>
       )}
 
-      {/* Expenses List - Better spacing */}
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-        <ExpenseList
-          expenses={expenses}
-          loading={expensesLoading}
-          error={expensesError}
-          onEdit={openEdit}
-          onDelete={handleDeleteExpense}
-          onRefresh={handleRefresh}
-        />
-      </div>
+      {/* Expenses List - Compact container */}
+      <ExpenseList
+        expenses={expenses}
+        loading={expensesLoading}
+        error={expensesError}
+        onEdit={openEdit}
+        onDelete={handleDeleteExpense}
+        onRefresh={handleRefresh}
+      />
 
       {/* Modals */}
       <CategoriesModal

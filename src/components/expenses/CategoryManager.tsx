@@ -124,25 +124,28 @@ export default function CategoryManager({ onCategoryChange }: Props) {
   }
 
   return (
-    <div className="flex flex-col h-full p-6">
-      <div className="flex-none pb-4 border-b mb-4">
+    <div className="flex flex-col h-full p-4">
+      <div className="flex-none pb-3 border-b mb-3">
         <form
           onSubmit={handleAddCategory}
-          className="flex flex-col md:flex-row gap-2 w-full"
+          className="flex flex-col gap-2 md:flex-row md:gap-2"
         >
-          <div className="flex-1 flex gap-2">
-            <input
-              type="text"
-              className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-black bg-white text-base"
-              placeholder="Add new category"
-              value={newCat}
-              onChange={(e) => setNewCat(e.target.value)}
-              disabled={loading}
-            />
+          {/* Input field - full width on mobile, flex-1 on desktop */}
+          <input
+            type="text"
+            className="w-full md:flex-1 rounded-lg border border-gray-300 px-3 py-2 text-black bg-white text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            placeholder="Add new category"
+            value={newCat}
+            onChange={(e) => setNewCat(e.target.value)}
+            disabled={loading}
+          />
+
+          {/* Buttons - together on mobile, separate on desktop */}
+          <div className="flex gap-2 md:contents">
             <button
               type="button"
               onClick={() => setNewIsDefault((v) => !v)}
-              className={`px-3 py-2 rounded-full text-sm font-medium border transition-colors ${
+              className={`px-3 py-2 rounded-lg text-xs font-medium border transition-colors whitespace-nowrap ${
                 newIsDefault
                   ? "bg-indigo-100 text-indigo-700 border-indigo-200"
                   : "bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200"
@@ -151,100 +154,106 @@ export default function CategoryManager({ onCategoryChange }: Props) {
             >
               {newIsDefault ? "✓ Default" : "Default"}
             </button>
+            <button
+              type="submit"
+              className="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-60 text-sm font-medium"
+              disabled={loading}
+            >
+              Add
+            </button>
           </div>
-          <button
-            type="submit"
-            className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-60 text-base"
-            disabled={loading}
-          >
-            Add
-          </button>
         </form>
       </div>
       <div className="flex-1 overflow-y-auto">
         {loading ? (
-          <div className="text-center text-gray-500 text-base">Loading...</div>
+          <div className="text-center text-gray-500 text-sm py-8">
+            Loading...
+          </div>
         ) : error ? (
-          <div className="text-center text-red-500 text-base">{error}</div>
+          <div className="text-center text-red-500 text-sm py-8">{error}</div>
         ) : (
-          <ul className="space-y-1.5">
+          <div className="space-y-2">
             {categories.map((cat: Category) => (
-              <li
+              <div
                 key={cat.id}
-                className="flex items-center justify-between bg-gradient-to-r from-gray-50 to-white hover:from-indigo-50 hover:to-white rounded-md px-3 py-2 border border-gray-200 transition-colors"
+                className="bg-white hover:bg-gray-50 rounded-lg p-3 border border-gray-200 hover:border-indigo-200 transition-all duration-200 shadow-sm hover:shadow-md"
               >
                 {editId === cat.id ? (
                   <form
                     onSubmit={handleEditCategory}
-                    className="flex gap-1.5 items-center w-full"
+                    className="flex flex-col gap-2"
                   >
                     <input
                       type="text"
-                      className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-black bg-white text-base"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-black bg-white text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
                     />
-                    <button
-                      type="button"
-                      onClick={() => setEditDefault(!editDefault)}
-                      className={`px-3 py-2 rounded-full text-sm font-medium border transition-colors ${
-                        editDefault
-                          ? "bg-indigo-100 text-indigo-700 border-indigo-200"
-                          : "bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200"
-                      }`}
-                    >
-                      {editDefault ? "✓ Default" : "Default"}
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-3 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700"
-                    >
-                      Save
-                    </button>
-                    <button
-                      type="button"
-                      className="px-3 py-2 bg-gray-300 text-gray-700 rounded text-sm hover:bg-gray-400"
-                      onClick={cancelEdit}
-                    >
-                      Cancel
-                    </button>
+                    <div className="flex justify-between items-center">
+                      <button
+                        type="button"
+                        onClick={() => setEditDefault(!editDefault)}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                          editDefault
+                            ? "bg-indigo-100 text-indigo-700 border-indigo-200"
+                            : "bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200"
+                        }`}
+                      >
+                        {editDefault ? "✓ Default" : "Default"}
+                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          type="submit"
+                          className="px-3 py-1.5 bg-green-600 text-white rounded-lg text-xs hover:bg-green-700 font-medium"
+                        >
+                          Save
+                        </button>
+                        <button
+                          type="button"
+                          className="px-3 py-1.5 bg-gray-300 text-gray-700 rounded-lg text-xs hover:bg-gray-400 font-medium"
+                          onClick={cancelEdit}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
                   </form>
                 ) : (
-                  <>
+                  <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <span className="text-gray-800 truncate text-base">
+                      <span className="text-gray-900 font-medium text-sm truncate">
                         {cat.name}
                       </span>
                       {cat.is_default && (
-                        <span className="ml-1 text-xs uppercase tracking-wide bg-indigo-100 text-indigo-700 px-2 py-1 rounded">
+                        <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-medium">
                           Default
                         </span>
                       )}
                     </div>
-                    <div className="flex gap-2 ml-2">
+                    <div className="flex gap-3">
                       <button
-                        className="text-base text-indigo-600 hover:text-indigo-800 font-medium"
+                        className="text-sm text-indigo-600 hover:text-indigo-800 font-medium hover:underline"
                         onClick={() => startEdit(cat)}
                       >
                         Edit
                       </button>
                       <button
-                        className="text-base text-red-600 hover:text-red-700 font-medium"
+                        className="text-sm text-red-600 hover:text-red-800 font-medium hover:underline"
                         onClick={() => handleDeleteCategory(cat.id)}
                       >
                         Delete
                       </button>
                     </div>
-                  </>
+                  </div>
                 )}
-              </li>
+              </div>
             ))}
             {categories.length === 0 && (
-              <li className="text-gray-500 text-center text-base">
+              <div className="text-gray-500 text-center text-sm py-8">
                 No categories found.
-              </li>
+              </div>
             )}
-          </ul>
+          </div>
         )}
       </div>
     </div>

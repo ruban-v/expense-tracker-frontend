@@ -21,7 +21,7 @@ export default function CategoriesModal({
         className="fixed inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl h-[700px] border border-gray-200 relative overflow-hidden flex flex-col">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl h-[90vh] max-h-[700px] min-h-[500px] border border-gray-200 relative overflow-hidden flex flex-col">
         {/* Header with inline buttons */}
         <div className="flex items-center justify-between p-3 border-b bg-gradient-to-r from-indigo-50 to-white flex-shrink-0">
           <div className="flex items-center gap-2">
@@ -29,7 +29,7 @@ export default function CategoriesModal({
               <FolderOpen size={16} className="text-indigo-600" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 text-lg">
+              <h3 className="font-semibold text-gray-900 text-base sm:text-lg">
                 Manage Categories
               </h3>
             </div>
