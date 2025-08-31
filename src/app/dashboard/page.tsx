@@ -153,7 +153,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+    <div className="space-y-4 sm:space-y-6 lg:space-y-8 pb-8">
       <div>
         <h2 className="text-2xl font-bold text-gray-800 sm:text-3xl lg:text-4xl">
           Welcome Back!

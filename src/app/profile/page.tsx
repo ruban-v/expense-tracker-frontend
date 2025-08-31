@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { profileApi } from "@/api/api";
 import { Profile, UpdateProfileRequest } from "@/api/types";
-import { User, Mail, Lock, Camera, Save, ArrowLeft, X } from "lucide-react";
+import { User, Mail, Lock, Camera, Save, X } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function ProfilePage() {
@@ -207,29 +207,19 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="space-y-8">
-        <div className="flex items-center">
-          <button
-            onClick={() => router.back()}
-            className="mr-4 flex items-center text-gray-600 hover:text-gray-900"
-          >
-            <ArrowLeft className="h-5 w-5 mr-1" />
-            Back
-          </button>
-          <h2 className="text-4xl font-bold text-gray-800">Profile</h2>
-        </div>
-        <div className="bg-white rounded-xl shadow-md p-8">
+      <div className="space-y-6 lg:space-y-8">
+        <div className="bg-white rounded-xl shadow-md p-4 lg:p-8">
           <div className="animate-pulse space-y-6">
-            <div className="flex items-center space-x-6">
-              <div className="w-24 h-24 bg-gray-200 rounded-full"></div>
-              <div className="space-y-2">
-                <div className="h-6 bg-gray-200 rounded w-48"></div>
-                <div className="h-4 bg-gray-200 rounded w-32"></div>
+            <div className="flex flex-col sm:flex-row items-center sm:space-x-6 space-y-4 sm:space-y-0">
+              <div className="w-20 h-20 lg:w-24 lg:h-24 bg-gray-200 rounded-full flex-shrink-0"></div>
+              <div className="space-y-2 text-center sm:text-left">
+                <div className="h-5 lg:h-6 bg-gray-200 rounded w-32 lg:w-48 mx-auto sm:mx-0"></div>
+                <div className="h-4 bg-gray-200 rounded w-24 lg:w-32 mx-auto sm:mx-0"></div>
               </div>
             </div>
             <div className="space-y-4">
-              <div className="h-4 bg-gray-200 rounded w-24"></div>
-              <div className="h-10 bg-gray-200 rounded"></div>
+              <div className="h-4 bg-gray-200 rounded w-20 lg:w-24"></div>
+              <div className="h-8 lg:h-10 bg-gray-200 rounded"></div>
             </div>
           </div>
         </div>
@@ -239,22 +229,12 @@ export default function ProfilePage() {
 
   if (error) {
     return (
-      <div className="space-y-8">
-        <div className="flex items-center">
-          <button
-            onClick={() => router.back()}
-            className="mr-4 flex items-center text-gray-600 hover:text-gray-900"
-          >
-            <ArrowLeft className="h-5 w-5 mr-1" />
-            Back
-          </button>
-          <h2 className="text-4xl font-bold text-gray-800">Profile</h2>
-        </div>
-        <div className="bg-white rounded-xl shadow-md p-8">
-          <p className="text-red-600 mb-4">{error}</p>
+      <div className="space-y-6 lg:space-y-8">
+        <div className="bg-white rounded-xl shadow-md p-4 lg:p-8">
+          <p className="text-red-600 mb-4 text-sm lg:text-base">{error}</p>
           <button
             onClick={loadProfile}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm lg:text-base"
           >
             Retry
           </button>
@@ -265,48 +245,29 @@ export default function ProfilePage() {
 
   if (!profile) {
     return (
-      <div className="space-y-8">
-        <div className="flex items-center">
-          <button
-            onClick={() => router.back()}
-            className="mr-4 flex items-center text-gray-600 hover:text-gray-900"
-          >
-            <ArrowLeft className="h-5 w-5 mr-1" />
-            Back
-          </button>
-          <h2 className="text-4xl font-bold text-gray-800">Profile</h2>
-        </div>
-        <div className="bg-white rounded-xl shadow-md p-8">
-          <p className="text-gray-600">No profile data available.</p>
+      <div className="space-y-6 lg:space-y-8">
+        <div className="bg-white rounded-xl shadow-md p-4 lg:p-8">
+          <p className="text-gray-600 text-sm lg:text-base">
+            No profile data available.
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center">
-        <button
-          onClick={() => router.back()}
-          className="mr-4 flex items-center text-gray-600 hover:text-gray-900"
-        >
-          <ArrowLeft className="h-5 w-5 mr-1" />
-          Back
-        </button>
-        <h2 className="text-4xl font-bold text-gray-800">Profile</h2>
-      </div>
-
+    <div className="space-y-6 lg:space-y-8">
       {/* Profile Information */}
-      <div className="bg-white rounded-xl shadow-md p-8">
-        <h3 className="text-2xl font-semibold text-gray-800 mb-6">
+      <div className="bg-white rounded-xl shadow-md p-4 lg:p-8">
+        <h3 className="text-xl lg:text-2xl font-semibold text-gray-800 mb-4 lg:mb-6">
           Profile Information
         </h3>
 
         <div className="space-y-6">
           {/* Profile Image */}
-          <div className="flex items-center space-x-6">
-            <div className="relative">
-              <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
+            <div className="relative flex-shrink-0">
+              <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                 {profileImage ? (
                   <Image
                     src={profileImage}
@@ -316,34 +277,36 @@ export default function ProfilePage() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <User className="w-10 h-10 text-gray-400" />
+                  <User className="w-8 h-8 lg:w-10 lg:h-10 text-gray-400" />
                 )}
               </div>
               <button
                 onClick={handleImageUpload}
-                className="absolute bottom-0 right-0 bg-indigo-600 text-white p-2 rounded-full cursor-pointer hover:bg-indigo-700 transition-colors"
+                className="absolute bottom-0 right-0 bg-indigo-600 text-white p-1.5 lg:p-2 rounded-full cursor-pointer hover:bg-indigo-700 transition-colors"
                 title="Change profile image"
               >
-                <Camera className="w-4 h-4" />
+                <Camera className="w-3 h-3 lg:w-4 lg:h-4" />
               </button>
             </div>
-            <div>
-              <h4 className="text-xl font-medium text-gray-800">
+            <div className="text-center sm:text-left">
+              <h4 className="text-lg lg:text-xl font-medium text-gray-800">
                 {profile.name}
               </h4>
-              <p className="text-gray-600">{profile.email}</p>
+              <p className="text-gray-600 text-sm lg:text-base">
+                {profile.email}
+              </p>
             </div>
           </div>
 
           {/* Name and Email Fields */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
             {/* Name Field */}
             <div>
               <label
                 htmlFor="name"
-                className="block text-base font-medium text-gray-700 mb-2"
+                className="block text-sm lg:text-base font-medium text-gray-700 mb-2"
               >
-                <User className="inline w-5 h-5 mr-2" />
+                <User className="inline w-4 h-4 lg:w-5 lg:h-5 mr-2" />
                 Full Name
               </label>
               <input
@@ -351,7 +314,7 @@ export default function ProfilePage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base text-gray-900 placeholder-gray-500"
+                className="w-full px-3 lg:px-4 py-2 lg:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm lg:text-base text-gray-900 placeholder-gray-500"
                 placeholder="Enter your full name"
               />
             </div>
@@ -360,9 +323,9 @@ export default function ProfilePage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-base font-medium text-gray-700 mb-2"
+                className="block text-sm lg:text-base font-medium text-gray-700 mb-2"
               >
-                <Mail className="inline w-5 h-5 mr-2" />
+                <Mail className="inline w-4 h-4 lg:w-5 lg:h-5 mr-2" />
                 Email Address
               </label>
               <input
@@ -370,22 +333,22 @@ export default function ProfilePage() {
                 type="email"
                 value={email}
                 readOnly
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-base cursor-not-allowed"
+                className="w-full px-3 lg:px-4 py-2 lg:py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-sm lg:text-base cursor-not-allowed"
               />
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-xs lg:text-sm text-gray-500 mt-1">
                 Email cannot be changed
               </p>
             </div>
           </div>
 
           {/* Update Profile Button */}
-          <div className="flex justify-end">
+          <div className="flex justify-center sm:justify-end">
             <button
               onClick={handleUpdateProfile}
               disabled={updating}
-              className="flex items-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-base"
+              className="w-full sm:w-auto flex items-center justify-center px-4 lg:px-6 py-2 lg:py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm lg:text-base"
             >
-              <Save className="w-5 h-5 mr-2" />
+              <Save className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
               {updating ? "Updating..." : "Update Profile"}
             </button>
           </div>
@@ -393,28 +356,28 @@ export default function ProfilePage() {
       </div>
 
       {/* Password Change Section */}
-      <div className="bg-white rounded-xl shadow-md p-8">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-2xl font-semibold text-gray-800">
+      <div className="bg-white rounded-xl shadow-md p-4 lg:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+          <h3 className="text-xl lg:text-2xl font-semibold text-gray-800">
             Change Password
           </h3>
           {!showPasswordForm && (
             <button
               onClick={() => setShowPasswordForm(true)}
-              className="flex items-center px-4 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 text-base"
+              className="w-full sm:w-auto flex items-center justify-center px-4 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 text-sm lg:text-base"
             >
-              <Lock className="w-5 h-5 mr-2" />
+              <Lock className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
               Change Password
             </button>
           )}
         </div>
 
         {showPasswordForm && (
-          <div className="space-y-6">
+          <div className="space-y-4 lg:space-y-6">
             <div>
               <label
                 htmlFor="current-password"
-                className="block text-base font-medium text-gray-700 mb-2"
+                className="block text-sm lg:text-base font-medium text-gray-700 mb-2"
               >
                 Current Password
               </label>
@@ -423,7 +386,7 @@ export default function ProfilePage() {
                 type="password"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base text-gray-900 placeholder-gray-500"
+                className="w-full px-3 lg:px-4 py-2 lg:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm lg:text-base text-gray-900 placeholder-gray-500"
                 placeholder="Enter your current password"
               />
             </div>
@@ -431,7 +394,7 @@ export default function ProfilePage() {
             <div>
               <label
                 htmlFor="new-password"
-                className="block text-base font-medium text-gray-700 mb-2"
+                className="block text-sm lg:text-base font-medium text-gray-700 mb-2"
               >
                 New Password
               </label>
@@ -440,7 +403,7 @@ export default function ProfilePage() {
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base text-gray-900 placeholder-gray-500"
+                className="w-full px-3 lg:px-4 py-2 lg:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm lg:text-base text-gray-900 placeholder-gray-500"
                 placeholder="Enter your new password"
               />
             </div>
@@ -448,7 +411,7 @@ export default function ProfilePage() {
             <div>
               <label
                 htmlFor="confirm-password"
-                className="block text-base font-medium text-gray-700 mb-2"
+                className="block text-sm lg:text-base font-medium text-gray-700 mb-2"
               >
                 Confirm New Password
               </label>
@@ -457,18 +420,18 @@ export default function ProfilePage() {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base text-gray-900 placeholder-gray-500"
+                className="w-full px-3 lg:px-4 py-2 lg:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm lg:text-base text-gray-900 placeholder-gray-500"
                 placeholder="Confirm your new password"
               />
             </div>
 
-            <div className="flex space-x-4">
+            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
               <button
                 onClick={handleChangePassword}
                 disabled={updating}
-                className="flex items-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-base"
+                className="w-full sm:w-auto flex items-center justify-center px-4 lg:px-6 py-2 lg:py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm lg:text-base"
               >
-                <Lock className="w-5 h-5 mr-2" />
+                <Lock className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
                 {updating ? "Updating..." : "Change Password"}
               </button>
               <button
@@ -478,7 +441,7 @@ export default function ProfilePage() {
                   setNewPassword("");
                   setConfirmPassword("");
                 }}
-                className="px-6 py-3 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 text-base"
+                className="w-full sm:w-auto px-4 lg:px-6 py-2 lg:py-3 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 text-sm lg:text-base"
               >
                 Cancel
               </button>
@@ -489,17 +452,17 @@ export default function ProfilePage() {
 
       {/* Image URL Modal */}
       {showImageModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md mx-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl p-4 lg:p-6 w-full max-w-md">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold text-gray-800">
+              <h3 className="text-lg lg:text-xl font-semibold text-gray-800">
                 Update Profile Image
               </h3>
               <button
                 onClick={handleImageUrlCancel}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 lg:w-6 lg:h-6" />
               </button>
             </div>
 
@@ -528,7 +491,7 @@ export default function ProfilePage() {
               {imageUrl && (
                 <div className="text-center">
                   <p className="text-sm text-gray-600 mb-2">Preview:</p>
-                  <div className="w-20 h-20 mx-auto rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 mx-auto rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                     <Image
                       src={imageUrl}
                       alt="Preview"
@@ -544,18 +507,18 @@ export default function ProfilePage() {
                 </div>
               )}
 
-              <div className="flex space-x-3 pt-2">
+              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 pt-2">
                 <button
                   onClick={handleImageUrlSubmit}
                   disabled={updating}
-                  className="flex-1 px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+                  className="w-full sm:flex-1 px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
                 >
                   {updating ? "Updating..." : "Update Image"}
                 </button>
                 <button
                   onClick={handleImageUrlCancel}
                   disabled={updating}
-                  className="flex-1 px-4 py-2 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+                  className="w-full sm:flex-1 px-4 py-2 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
                 >
                   Cancel
                 </button>

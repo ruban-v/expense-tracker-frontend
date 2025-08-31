@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { BarChart3, ClipboardList, User, LogOut } from "lucide-react";
@@ -35,8 +36,17 @@ export default function Sidebar() {
     <>
       {/* Desktop Sidebar - Hidden on mobile and tablet */}
       <div className="hidden lg:flex h-screen w-64 flex-col bg-white shadow-lg">
-        <div className="flex h-16 items-center justify-center border-b">
-          <h1 className="text-3xl font-bold text-indigo-600">ExpenseT</h1>
+        <div className="flex h-16 items-center justify-center border-b px-4">
+          <div className="flex items-center space-x-3">
+            <Image
+              src="/logo.png"
+              alt="ExpenseT Logo"
+              width={32}
+              height={32}
+              className="h-8 w-8"
+            />
+            <h1 className="text-3xl font-bold text-indigo-600">ExpenseT</h1>
+          </div>
         </div>
         <nav className="flex-1 space-y-2 px-4 py-6">
           {navLinks.map((link) => {
@@ -71,7 +81,16 @@ export default function Sidebar() {
       {/* Mobile Top Header - Simple header with just logo */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white shadow-sm border-b">
         <div className="flex h-14 items-center justify-center px-4">
-          <h1 className="text-xl font-bold text-indigo-600">ExpenseT</h1>
+          <div className="flex items-center space-x-2">
+            <Image
+              src="/logo.png"
+              alt="ExpenseT Logo"
+              width={24}
+              height={24}
+              className="h-6 w-6"
+            />
+            <h1 className="text-xl font-bold text-indigo-600">ExpenseT</h1>
+          </div>
         </div>
       </div>
 
