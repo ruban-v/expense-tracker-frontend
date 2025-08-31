@@ -142,59 +142,78 @@ export default function ExpensesPage() {
   }
 
   return (
-    <div className="p-4">
-      <div className="flex justify-between items-center mb-4">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-800">Expenses</h1>
-          <p className="mt-1 text-base text-gray-500">
+    <div className="space-y-4 sm:space-y-6">
+      {/* Header Section - Responsive */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold text-gray-800 sm:text-3xl lg:text-4xl">
+            Expenses
+          </h1>
+          <p className="mt-1 text-sm text-gray-600 sm:text-base">
             Manage and track your recent spending
           </p>
         </div>
-        <div className="flex gap-2">
+        
+        {/* Action buttons - Mobile optimized */}
+        <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:gap-3">
           <button
             onClick={() => setShowFilterForm(!showFilterForm)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-200 text-black hover:bg-gray-300"
+            className={`flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors sm:px-4 ${
+              showFilterForm
+                ? "bg-indigo-100 text-indigo-700 hover:bg-indigo-200"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
           >
             Filter
           </button>
           <button
             onClick={handleRefresh}
-            className="p-2 rounded-full bg-gray-200 text-black hover:bg-gray-400 hover:text-white"
+            className="flex items-center justify-center p-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
             title="Refresh expenses"
           >
-            <RefreshCcw size={20} />
+            <RefreshCcw size={18} className="sm:w-5 sm:h-5" />
           </button>
           <button
             onClick={openAdd}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 text-sm font-medium transition-colors sm:px-4"
           >
-            <Plus size={20} /> Add Expense
+            <Plus size={18} className="sm:w-5 sm:h-5" />
+            <span className="hidden sm:inline">Add Expense</span>
+            <span className="sm:hidden">Add</span>
           </button>
           <button
             onClick={() => setShowCatModal(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-600 text-white hover:bg-gray-700 text-sm font-medium transition-colors sm:px-4"
           >
-            Manage Categories
+            <span className="hidden sm:inline">Categories</span>
+            <span className="sm:hidden">Cat.</span>
           </button>
         </div>
       </div>
 
+      {/* Filter Form - Improved layout */}
       {showFilterForm && (
-        <FilterExpensesForm
-          onFilter={handleFilter}
-          onClear={handleClearFilter}
-        />
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+          <FilterExpensesForm
+            onFilter={handleFilter}
+            onClear={handleClearFilter}
+          />
+        </div>
       )}
 
-      <ExpenseList
-        expenses={expenses}
-        loading={expensesLoading}
-        error={expensesError}
-        onEdit={openEdit}
-        onDelete={handleDeleteExpense}
-        onRefresh={handleRefresh}
-      />
+      {/* Expenses List - Better spacing */}
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+        <ExpenseList
+          expenses={expenses}
+          loading={expensesLoading}
+          error={expensesError}
+          onEdit={openEdit}
+          onDelete={handleDeleteExpense}
+          onRefresh={handleRefresh}
+        />
+      </div>
 
+      {/* Modals */}
       <CategoriesModal
         open={showCatModal}
         onClose={() => setShowCatModal(false)}

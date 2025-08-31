@@ -21,12 +21,14 @@ export default function MonthlySummaryChart({
 }: MonthlySummaryChartProps) {
   if (!data || data.length === 0) {
     return (
-      <div className="rounded-xl bg-white p-6 shadow-md">
-        <h3 className="text-xl font-semibold text-gray-800">
+      <div className="rounded-lg bg-white p-4 shadow-md sm:p-5 lg:rounded-xl lg:p-6">
+        <h3 className="text-base font-semibold text-gray-800 sm:text-lg lg:text-xl">
           Monthly Expense Summary
         </h3>
-        <div className="mt-4 flex h-80 w-full items-center justify-center">
-          <p className="text-gray-500">No data available for the chart.</p>
+        <div className="mt-3 flex h-48 w-full items-center justify-center sm:mt-4 sm:h-60 lg:h-80">
+          <p className="text-gray-500 text-sm sm:text-base">
+            No data available for the chart.
+          </p>
         </div>
       </div>
     );
@@ -39,29 +41,31 @@ export default function MonthlySummaryChart({
   }));
 
   return (
-    <div className="rounded-xl bg-white p-6 shadow-md">
-      <h3 className="text-xl font-semibold text-gray-800">
+    <div className="rounded-lg bg-white p-4 shadow-md sm:p-5 lg:rounded-xl lg:p-6">
+      <h3 className="text-base font-semibold text-gray-800 sm:text-lg lg:text-xl">
         Monthly Expense Summary
       </h3>
-      <div className="mt-4 h-80 w-full chart-container">
-        <ResponsiveContainer
-          width="100%"
-          height="100%"
-        >
+      <div className="mt-3 h-48 w-full chart-container sm:mt-4 sm:h-60 lg:h-80">
+        <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
             margin={{
               top: 5,
-              right: 30,
-              left: 20,
+              right: 10,
+              left: 5,
               bottom: 5,
             }}
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
-            <XAxis dataKey="month" tick={{ fill: "#6B7280", fontSize: 14 }} />
+            <XAxis
+              dataKey="month"
+              tick={{ fill: "#6B7280", fontSize: 12 }}
+              className="sm:text-sm"
+            />
             <YAxis
-              tick={{ fill: "#6B7280", fontSize: 14 }}
+              tick={{ fill: "#6B7280", fontSize: 12 }}
               tickFormatter={(value) => `₹${value}`}
+              className="sm:text-sm"
             />
             <Tooltip
               cursor={{ fill: "rgba(239, 246, 255, 0.5)" }}
@@ -70,6 +74,7 @@ export default function MonthlySummaryChart({
                 boxShadow:
                   "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
                 border: "1px solid #E5E7EB",
+                fontSize: "14px",
               }}
               formatter={(value) => [
                 `₹${Number(value).toFixed(2)}`,
@@ -77,7 +82,12 @@ export default function MonthlySummaryChart({
               ]}
               labelFormatter={(label) => `Month: ${label}`}
             />
-            <Legend wrapperStyle={{ paddingTop: "20px" }} />
+            <Legend
+              wrapperStyle={{
+                paddingTop: "10px",
+                fontSize: "14px",
+              }}
+            />
             <Bar
               dataKey="total"
               fill="#4F46E5"

@@ -50,16 +50,16 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
-        <h2 className="mb-6 text-center text-4xl font-bold text-gray-800">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
+      <div className="w-full max-w-md rounded-lg bg-white p-4 shadow-lg sm:p-6 lg:p-8">
+        <h2 className="mb-3 text-center text-xl font-bold text-gray-800 sm:mb-4 sm:text-2xl lg:mb-6 lg:text-4xl">
           Create Your Account
         </h2>
         <form onSubmit={handleSubmit} noValidate>
-          <div className="mb-4">
+          <div className="mb-2 sm:mb-3 lg:mb-4">
             <label
               htmlFor="name"
-              className="mb-2 block text-base font-medium text-gray-700"
+              className="mb-1 block text-sm font-medium text-gray-700 sm:text-base"
             >
               Full Name
             </label>
@@ -69,14 +69,14 @@ export default function RegisterPage() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:px-4 sm:py-3 sm:text-base"
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-2 sm:mb-3 lg:mb-4">
             <label
               htmlFor="email"
-              className="mb-2 block text-base font-medium text-gray-700"
+              className="mb-1 block text-sm font-medium text-gray-700 sm:text-base"
             >
               Email Address
             </label>
@@ -86,14 +86,14 @@ export default function RegisterPage() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:px-4 sm:py-3 sm:text-base"
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-2 sm:mb-3 lg:mb-4">
             <label
               htmlFor="password"
-              className="mb-2 block text-base font-medium text-gray-700"
+              className="mb-1 block text-sm font-medium text-gray-700 sm:text-base"
             >
               Password
             </label>
@@ -103,14 +103,14 @@ export default function RegisterPage() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:px-4 sm:py-3 sm:text-base"
               required
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-3 sm:mb-4 lg:mb-6">
             <label
               htmlFor="confirmPassword"
-              className="mb-2 block text-base font-medium text-gray-700"
+              className="mb-1 block text-sm font-medium text-gray-700 sm:text-base"
             >
               Confirm Password
             </label>
@@ -120,7 +120,7 @@ export default function RegisterPage() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:px-4 sm:py-3 sm:text-base"
               required
             />
           </div>
@@ -128,13 +128,13 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full rounded-md bg-indigo-600 px-4 py-3 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-indigo-400"
+              className="w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-indigo-400 sm:px-4 sm:py-3 sm:text-base"
             >
               {isLoading ? "Creating Account..." : "Register"}
             </button>
           </div>
         </form>
-        <p className="mt-6 text-center text-base text-gray-600">
+        <p className="mt-3 text-center text-sm text-gray-600 sm:mt-4 lg:mt-6 sm:text-base">
           Already have an account?{" "}
           <Link
             href="/login"
