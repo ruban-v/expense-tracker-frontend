@@ -43,7 +43,7 @@ export default function Sidebar() {
               alt="ExpenseT Logo"
               width={32}
               height={32}
-              className="h-8 w-8"
+              className="h-12 w-12"
             />
             <h1 className="text-3xl font-bold text-indigo-600">ExpenseT</h1>
           </div>
@@ -85,9 +85,9 @@ export default function Sidebar() {
             <Image
               src="/logo.png"
               alt="ExpenseT Logo"
-              width={24}
-              height={24}
-              className="h-6 w-6"
+              width={28}
+              height={28}
+              className="h-12 w-12"
             />
             <h1 className="text-xl font-bold text-indigo-600">ExpenseT</h1>
           </div>
